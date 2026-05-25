@@ -44,7 +44,7 @@ public class Usuario {
     private Rol rol;
 
     @Column(nullable = false, length = 20)
-    private String estado = "ACTIVO";
+    private String estado = "ACTIVO"; //to-do: crear enum EstadoUsuario
 
     @JsonIgnore
     @Column(name = "intentos_fallidos")
@@ -54,7 +54,6 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cliente perfilCliente;
 
-    // metodo para relación bidireccional entre Usuario y Cliente
     public void setPerfilCliente(Cliente cliente) {
         if (cliente != null) {
             cliente.setUsuario(this);
