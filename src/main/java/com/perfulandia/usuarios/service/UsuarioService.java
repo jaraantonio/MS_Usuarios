@@ -1,17 +1,8 @@
 package com.perfulandia.usuarios.service;
 
-import com.perfulandia.usuarios.exception.CredencialesInvalidasException;
-import com.perfulandia.usuarios.exception.RecursoDuplicadoException;
-import com.perfulandia.usuarios.exception.RecursoNoEncontradoException;
-import com.perfulandia.usuarios.model.dto.*;
-import com.perfulandia.usuarios.model.entity.Cliente;
-import com.perfulandia.usuarios.model.entity.TokenInvalidado;
-import com.perfulandia.usuarios.model.entity.TokenRecuperacion;
-import com.perfulandia.usuarios.model.entity.Usuario;
-import com.perfulandia.usuarios.model.enums.Rol;
-import com.perfulandia.usuarios.repository.TokenInvalidadoRepository;
-import com.perfulandia.usuarios.repository.TokenRecuperacionRepository;
-import com.perfulandia.usuarios.repository.UsuarioRepository;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,8 +11,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+import com.perfulandia.usuarios.exception.CredencialesInvalidasException;
+import com.perfulandia.usuarios.exception.RecursoDuplicadoException;
+import com.perfulandia.usuarios.exception.RecursoNoEncontradoException;
+import com.perfulandia.usuarios.model.dto.ActualizarEmpleadoDTO;
+import com.perfulandia.usuarios.model.dto.ActualizarPerfilDTO;
+import com.perfulandia.usuarios.model.dto.CrearEmpleadoDTO;
+import com.perfulandia.usuarios.model.dto.PerfilResponseDTO;
+import com.perfulandia.usuarios.model.dto.RegistroRequestDTO;
+import com.perfulandia.usuarios.model.entity.Cliente;
+import com.perfulandia.usuarios.model.entity.TokenInvalidado;
+import com.perfulandia.usuarios.model.entity.TokenRecuperacion;
+import com.perfulandia.usuarios.model.entity.Usuario;
+import com.perfulandia.usuarios.model.enums.Rol;
+import com.perfulandia.usuarios.repository.TokenInvalidadoRepository;
+import com.perfulandia.usuarios.repository.TokenRecuperacionRepository;
+import com.perfulandia.usuarios.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {

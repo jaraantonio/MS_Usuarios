@@ -2,6 +2,7 @@ package com.perfulandia.usuarios.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.perfulandia.usuarios.model.enums.Rol;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
