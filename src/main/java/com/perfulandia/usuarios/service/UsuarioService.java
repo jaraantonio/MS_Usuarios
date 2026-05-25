@@ -2,6 +2,7 @@ package com.perfulandia.usuarios.service;
 
 import com.perfulandia.usuarios.exception.CredencialesInvalidasException;
 import com.perfulandia.usuarios.exception.RecursoDuplicadoException;
+import com.perfulandia.usuarios.exception.RecursoNoEncontradoException;
 import com.perfulandia.usuarios.model.dto.*;
 import com.perfulandia.usuarios.model.entity.Cliente;
 import com.perfulandia.usuarios.model.entity.TokenInvalidado;
@@ -97,7 +98,7 @@ public class UsuarioService {
     @Transactional
     public void actualizarPerfil(String correo, ActualizarPerfilDTO dto) {
         Usuario usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
 
         usuario.setNombre(dto.nombre());
         if (usuario.getPerfilCliente() != null) {
@@ -131,10 +132,10 @@ public class UsuarioService {
     @Transactional
     public void actualizarEmpleado(Integer id, ActualizarEmpleadoDTO dto, String correoAdmin) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
 
         if (usuario.getCorreo().equals(correoAdmin) && dto.rol() != Rol.ADMIN) {
-            throw new RuntimeException("Regla de negocio: Un admin no puede quitarse su propio rol.");
+            throw new RuntimeException("Un admin no puede quitarse su propio rol.");
         }
 
         usuario.setNombre(dto.nombre());
@@ -145,7 +146,7 @@ public class UsuarioService {
     @Transactional
     public void desactivarCuenta(Integer id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado."));
         usuario.setEstado("INACTIVO");
     }
 
@@ -157,7 +158,7 @@ public class UsuarioService {
             tr.setToken(UUID.randomUUID().toString());
             tr.setExpiracion(LocalDateTime.now().plusMinutes(15));
             tokenRecuperacionRepository.save(tr);
-            log.info("MS Notificaciones simulado. Correo enviado a {} con token {}", correo, tr.getToken());
+            log.info("Correo de recuperación enviado a {} con token {}", correo, tr.getToken());
         });
     }
 

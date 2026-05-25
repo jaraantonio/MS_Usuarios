@@ -17,26 +17,30 @@ public class GlobalExceptionHandler {
         String errores = ex.getBindingResult().getFieldErrors().stream()
                 .map(err -> err.getField() + ": " + err.getDefaultMessage())
                 .collect(Collectors.joining(" | "));
-        
+
         return new ResponseEntity<>(
-            new ErrorResponse(LocalDateTime.now(), 400, "Error de Validacion", errores), 
-            HttpStatus.BAD_REQUEST
-        );
+                new ErrorResponse(LocalDateTime.now(), 400, "Error de Validacion", errores),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CredencialesInvalidasException.class)
     public ResponseEntity<ErrorResponse> handleCredenciales(CredencialesInvalidasException ex) {
         return new ResponseEntity<>(
-            new ErrorResponse(LocalDateTime.now(), 401, "No Autorizado", ex.getMessage()), 
-            HttpStatus.UNAUTHORIZED
-        );
+                new ErrorResponse(LocalDateTime.now(), 401, "No Autorizado", ex.getMessage()),
+                HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(RecursoDuplicadoException.class)
     public ResponseEntity<ErrorResponse> handleDuplicado(RecursoDuplicadoException ex) {
         return new ResponseEntity<>(
-            new ErrorResponse(LocalDateTime.now(), 409, "Conflicto", ex.getMessage()), 
-            HttpStatus.CONFLICT
-        );
+                new ErrorResponse(LocalDateTime.now(), 409, "Conflicto", ex.getMessage()),
+                HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(RecursoNoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> handleNoEncontrado(RecursoNoEncontradoException ex) {
+        return new ResponseEntity<>(
+                new ErrorResponse(LocalDateTime.now(), 404, "No Encontrado", ex.getMessage()),
+                HttpStatus.NOT_FOUND);
     }
 }
